@@ -40,18 +40,12 @@ namespace CheapestDelivery
             while (itemCount > 0)
             {
                 Package package = null;
-                for (var i = 0; package == null && i < packages.Length; i++)
+                for (var i = 0; package == null && i < packages.Length - 1; i++)
                 {
                     package = GetPackageToFillCluster(packedItems);
                     // Wenn gefunden, dann brich die Suche ab
                     if (package != null)
                     {
-                        break;
-                    }
-                    // ist letztes Item?
-                    if (i >= packages.Length - 1)
-                    {
-                        package = packages[i];
                         break;
                     }
                     // Passt das aktuelle Paket?
@@ -70,6 +64,11 @@ namespace CheapestDelivery
                             package = packages[i];
                         }
                     }
+                }
+                // ist letztes Item?
+                if (package == null)
+                {
+                    package = packages[^1];
                 }
                 // Füge Paket der Liste hinzu und entferne die verpackten Gegenstände
                 packedItems.Add(new PackedItem
